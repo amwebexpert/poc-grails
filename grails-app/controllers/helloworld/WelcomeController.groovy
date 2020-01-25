@@ -9,14 +9,19 @@ class WelcomeController {
     @Value('${info.app.internal.counter}')
     String counterInternal
 
+    @Value('${info.app.testSystemProp}')
+    String testSystemProp
+
     MyService myService
 
     def test() {
+        log.info('Inside the test method of controller')
+
         def config = grailsApplication.config
         def lastPublishDate = myService.lastPublishDate
         def counter = config.getProperty('info.app.counter', Integer, 5)
 
-        render "Configurations: ${lastPublishDate}. Conter: ${counter}. Conter internal: ${counterInternal}"
+        render "Configurations: ${lastPublishDate}. Conter: ${counter}. Conter internal: ${counterInternal}. testSystemProp: ${testSystemProp}"
     }
 
 }
