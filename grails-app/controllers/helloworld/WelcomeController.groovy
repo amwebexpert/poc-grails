@@ -14,6 +14,8 @@ class WelcomeController {
 
     MyService myService
 
+    MyBean myBean
+
     def test() {
         log.info('Inside the test method of controller')
 
@@ -21,7 +23,7 @@ class WelcomeController {
         def lastPublishDate = myService.lastPublishDate
         def counter = config.getProperty('info.app.counter', Integer, 5)
 
-        render "Configurations: ${lastPublishDate}. Conter: ${counter}. Conter internal: ${counterInternal}. testSystemProp: ${testSystemProp}"
+        render "Configurations: ${lastPublishDate}. Conter: ${counter}. Conter internal: ${counterInternal}. testSystemProp: ${testSystemProp}\n ${myBean}"
     }
 
 }
