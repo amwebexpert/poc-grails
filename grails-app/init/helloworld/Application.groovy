@@ -19,7 +19,13 @@ class Application extends GrailsAutoConfiguration implements GrailsApplicationLi
     @Override
     void onStartup(Map<String, Object> event) {
         super.onStartup(event)
-        log.info("********** HelloWorld demo APP STARTUP")
+
+        def appInfo = grailsApplication.metadata
+        def appName = appInfo.getApplicationName()
+        def version = appInfo.getApplicationVersion()
+        def grailsVersion = appInfo.getGrailsVersion()
+
+        log.info("********** ${appName} ${version} demo APP STARTUP. Grails version: ${grailsVersion}")
     }
 
     @Override
