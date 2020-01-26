@@ -66,8 +66,10 @@ class WelcomeController {
         )
     }
 
+    // http://localhost:8080/welcome/books.json
     def books() {
-        render bookService.list()
+        // The respond method is the preferred way to return JSON
+        respond bookService.list()
     }
 
 }
