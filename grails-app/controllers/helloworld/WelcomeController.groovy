@@ -1,5 +1,6 @@
 package helloworld
 
+import grails.converters.JSON
 import org.springframework.beans.factory.annotation.Value
 
 class WelcomeController {
@@ -20,7 +21,7 @@ class WelcomeController {
 
     BookService bookService
 
-    def demoBinding() {
+    def demoBindingOld() {
         def bindingMap = [name: '  Sarah  ', author: 'Stephen King', age: 63, date: '1965-12-08']
         def book = new Book(bindingMap)
 
@@ -71,8 +72,62 @@ class WelcomeController {
     // http://localhost:8080/welcome/books.json
     // http://localhost:8080/welcome/books (because we defined JSON as a priority inside responseFormats at the beginning of the controller class)
     def books() {
+        if (bookService.count() == 0) {
+            def bindingMap = [name: '  Sarah  ', author: 'Stephen King', age: 63, date: '1965-12-08']
+            def book = new Book(bindingMap)
+            bookService.save(book)
+        }
+
         // The respond method is the preferred way to return JSON
         respond bookService.list()
+    }
+
+    // Customized JSON example
+    def grailsMapToJson = {
+        // Grails Map object
+        def myHomeAddress = [
+                building: "25",
+                street  : "High Street",
+                city    : "Cambridge",
+                country : "UK",
+                pref    : true
+        ]
+
+        // Grails Map object
+        def myWorkAddress = [
+                building: "1",
+                street  : "Science Park",
+                city    : "Cambridge",
+                country : "UK"]
+
+        // Top level Grails Map object
+        def dave = [
+                name     : "David Bower",
+                addresses: [myHomeAddress, myWorkAddress]]
+
+        // Each Grails map becomes a JSON object and Grails lists become JSON arrays
+        render dave as JSON
+    }
+
+    // http://localhost:8080/welcome/objectToJson
+    def objectToJson = {
+        def bindingMap = [name: '  Sarah  ', author: 'Stephen King', age: 63, date: '1965-12-08']
+        def book = new Book(bindingMap)
+
+        response.contentType = "application/json"
+        render book.encodeAsJSON()
+
+        // Notice that the ‘as’ operator is not overloaded for plain objects so if we try to write:
+        // book as JSON
+        // We get: Cannot cast object with class 'Book' to class 'grails.converters.JSON'
+    }
+
+    // http://localhost:8080/welcome/domainToJson
+    def domainToJson = {
+        def bindingMap = [name: '  Sarah  ', author: 'Stephen King', age: 63, date: '1965-12-08']
+        def book = new Book(bindingMap)
+
+        render book as JSON
     }
 
 }
