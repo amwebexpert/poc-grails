@@ -9,10 +9,10 @@ class BootStrap {
 
         Environment.executeForCurrentEnvironment {
             production {
-                log.info("Production environnement starting...")
+                log.info("Production environment starting...")
             }
             development {
-                log.info("Development environnement starting...")
+                log.info("Development environment starting...")
             }
         }
 
