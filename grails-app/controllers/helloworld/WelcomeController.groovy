@@ -16,6 +16,25 @@ class WelcomeController {
 
     MyBean myBean
 
+    BookService bookService
+
+    // http://localhost:8080/welcome/demoParams?age=90&author=Tolkien&name=Lord%20of%20the%20ring
+    def demoParams() {
+        // http://docs.grails.org/3.3.11/ref/Servlet%20API/request.html
+        def userAgent = request.getHeader("User-Agent")
+        def book = new Book(params) // bind request parameters onto properties of book
+
+        render "User agent: ${userAgent} \r\n Author info: ${params.author}, age = ${params.age}, name = ${params.name}. Book: ${book}"
+    }
+
+    def showContextVersion() {
+        log.info('Inside the showContextVersion method of controller')
+
+        def info = "servletContext: ${servletContext.getMajorVersion()}.${servletContext.getMinorVersion()}"
+
+        render info
+    }
+
     def test() {
         log.info('Inside the test method of controller')
 
@@ -24,6 +43,10 @@ class WelcomeController {
         def counter = config.getProperty('info.app.counter', Integer, 5)
 
         render "Configurations: ${lastPublishDate}. Conter: ${counter}. Conter internal: ${counterInternal}. testSystemProp: ${testSystemProp}\n ${myBean}"
+    }
+
+    def books() {
+        render bookService.list()
     }
 
 }

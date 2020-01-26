@@ -25,6 +25,9 @@ class Application extends GrailsAutoConfiguration implements GrailsApplicationLi
         def version = appInfo.getApplicationVersion()
         def grailsVersion = appInfo.getGrailsVersion()
 
+        def book = new Book()
+        book.
+
         log.info("********** ${appName} ${version} demo APP STARTUP. Grails version: ${grailsVersion}")
     }
 
