@@ -47,7 +47,12 @@ class WelcomeController {
         def lastPublishDate = myService.lastPublishDate
         def counter = config.getProperty('info.app.counter', Integer, 5)
 
-        render "Configurations: ${lastPublishDate}. Conter: ${counter}. Conter internal: ${counterInternal}. testSystemProp: ${testSystemProp}\n ${myBean}"
+        def info = "Configurations: ${lastPublishDate}.\nConter: ${counter}. \nConter internal: ${counterInternal}.\ntestSystemProp: ${testSystemProp}\n${myBean}\nParams: ${params}"
+        render(
+                text: info,
+                contentType: "text/plain",
+                encoding: "UTF-8"
+        )
     }
 
     def books() {
