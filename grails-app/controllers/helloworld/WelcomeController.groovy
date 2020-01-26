@@ -23,8 +23,13 @@ class WelcomeController {
         // http://docs.grails.org/3.3.11/ref/Servlet%20API/request.html
         def userAgent = request.getHeader("User-Agent")
         def book = new Book(params) // bind request parameters onto properties of book
+        def info = "User agent: ${userAgent}\nAuthor info: ${params.author}, age = ${params.age}, name = ${params.name}.\n${book}"
 
-        render "User agent: ${userAgent} \r\n Author info: ${params.author}, age = ${params.age}, name = ${params.name}. Book: ${book}"
+        render(
+                text: info,
+                contentType: "text/plain",
+                encoding: "UTF-8"
+        )
     }
 
     def showContextVersion() {
