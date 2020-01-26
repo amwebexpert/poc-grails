@@ -18,6 +18,17 @@ class WelcomeController {
 
     BookService bookService
 
+    def demoBinding() {
+        def bindingMap = [name: '  Sarah  ', author: 'Stephen King', age: 63, date: '1965-12-08']
+        def book = new Book(bindingMap)
+
+        render(
+                text: book.toString(),
+                contentType: "text/plain",
+                encoding: "UTF-8"
+        )
+    }
+
     // http://localhost:8080/welcome/demoParams?age=90&author=Tolkien&name=Lord%20of%20the%20ring
     def demoParams() {
         // http://docs.grails.org/3.3.11/ref/Servlet%20API/request.html
